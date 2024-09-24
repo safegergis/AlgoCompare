@@ -2,6 +2,16 @@
 import { ref } from 'vue'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 const unsortedArray = ref('')
 const sortedArray = ref('')
@@ -11,6 +21,24 @@ const handleSubmit = () => {
   // For now, we'll just split the input and sort it as a placeholder
   const array = unsortedArray.value.split(',').map(Number)
   sortedArray.value = array.sort((a, b) => a - b).join(', ')
+}
+
+const isDialogOpen = ref(false)
+const arrayLength = ref<number>(10)
+const lowerBound = ref<number>(0)
+const upperBound = ref<number>(100)
+
+const openDialog = () => {
+  isDialogOpen.value = true
+}
+
+const generateRandomArray = () => {
+  const array = Array.from(
+    { length: arrayLength.value },
+    () => Math.floor(Math.random() * (upperBound.value - lowerBound.value + 1)) + lowerBound.value
+  )
+  unsortedArray.value = array.join(', ')
+  isDialogOpen.value = false
 }
 </script>
 
@@ -27,6 +55,35 @@ const handleSubmit = () => {
         />
         <Button type="submit">Sort Array</Button>
       </form>
+      <div class="mt-4">
+        <Button @click="openDialog">Generate Random Array</Button>
+      </div>
+
+      <Dialog v-model:open="isDialogOpen">
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Generate Random Array</DialogTitle>
+            <DialogDescription> Set the parameters for your random array. </DialogDescription>
+          </DialogHeader>
+          <div class="grid gap-4 py-4">
+            <div class="grid grid-cols-4 items-center gap-4">
+              <Label for="arrayLength" class="text-right">Array Length</Label>
+              <Input id="arrayLength" v-model="arrayLength" type="number" class="col-span-3" />
+            </div>
+            <div class="grid grid-cols-4 items-center gap-4">
+              <Label for="lowerBound" class="text-right">Lower Bound</Label>
+              <Input id="lowerBound" v-model="lowerBound" type="number" class="col-span-3" />
+            </div>
+            <div class="grid grid-cols-4 items-center gap-4">
+              <Label for="upperBound" class="text-right">Upper Bound</Label>
+              <Input id="upperBound" v-model="upperBound" type="number" class="col-span-3" />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button @click="generateRandomArray">Generate</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <div class="mt-8">
         <h2 class="text-xl font-semibold mb-2">Sorting Time Comparison</h2>
