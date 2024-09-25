@@ -12,15 +12,24 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { ofetch } from 'ofetch'
 
 const unsortedArray = ref('')
 const sortedArray = ref('')
 
-const handleSubmit = () => {
-  // Here you would implement the sorting logic and time measurement
-  // For now, we'll just split the input and sort it as a placeholder
-  const array = unsortedArray.value.split(',').map(Number)
-  sortedArray.value = array.sort((a, b) => a - b).join(', ')
+const handleSubmit = async () => {
+  const array = { array: unsortedArray.value.split(',').map(Number) }
+  console.log(array)
+  const response = await ofetch('http://127.0.0.1:5000/sort', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(array)
+  })
+  console.log(response)
+  console.log(response.bubble_sort.sorted_array)
+  sortedArray.value = response.quick_sort.sorted_array
 }
 
 const isDialogOpen = ref(false)

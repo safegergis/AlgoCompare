@@ -33,7 +33,7 @@ def merge_sort(arr):
 
         # left half block
         while i < len(left_half) and j < len(right_half):
-            if left_half[i][0] < right_half[j][0]:
+            if left_half[i] < right_half[j]:
                 arr[k] = left_half[i]
                 i += 1
             else:
@@ -56,26 +56,26 @@ def merge_sort(arr):
     end_time = process_time()
     elapsed_time = end_time - start_time
     return arr, elapsed_time
-
+def _quick_sort(arr):
+        if len(arr) <= 1:
+            return arr
+        else:
+            pivot = arr[len(arr) // 2]
+            left = [x for x in arr if x < pivot]
+            middle = [x for x in arr if x == pivot]
+            right = [x for x in arr if x > pivot]
+            return _quick_sort(left) + middle + _quick_sort(right)
 def quick_sort(arr):
     start_time = process_time()
     
-    # Quick sort algorithm implementation goes here
-    pivot = arr[len(arr) // 2]
-    left = [x for x in arr if x < pivot]
-    middle = [x for x in arr if x == pivot]
-    right = [x for x in arr if x > pivot]
-    arr = quick_sort(left) + middle + quick_sort(right)
+    sorted_array = _quick_sort(arr)
 
     end_time = process_time()
     elapsed_time = end_time - start_time
-    return arr, elapsed_time
+    return sorted_array, elapsed_time
 
-def radix_sort(arr):
-    start_time = process_time()
     
-    # Radix sort algorithm implementation goes here
-    def counting_sort(arr, place):
+def counting_sort(arr, place):
         size = len(arr)
         output = [0] * size
         count = [0] * 10
@@ -98,7 +98,9 @@ def radix_sort(arr):
             i -= 1
 
         return output
-
+def radix_sort(arr):
+    start_time = process_time()
+    
     max_element = max(arr)
     place = 1
     while max_element // place > 0:
@@ -126,9 +128,44 @@ def linear_search(arr, target):
     elapsed_time = end_time - start_time
     return found, elapsed_time  # Return found
 
-def generate_random_array(number):
+
+# Simple tests for sorting algorithms
+if __name__ == "__main__":
+    # Test array
+    test_arr = [64, 34, 25, 12, 22, 11, 90]
     
-    # Generate the random array
-    random_array = [random.randint(0, 100) for _ in range(number)]
+    print("Original array:", test_arr)
     
-    return random_array
+    # Test bubble sort
+    sorted_arr, time_bubble = bubble_sort(test_arr.copy())
+    print("\nBubble Sort:")
+    print("Sorted array:", sorted_arr)
+    print("Time taken:", time_bubble)
+    
+    # Test merge sort
+    sorted_arr, time_merge = merge_sort(test_arr.copy())
+    print("\nMerge Sort:")
+    print("Sorted array:", sorted_arr)
+    print("Time taken:", time_merge)
+    
+    # Test quick sort
+    sorted_arr, time_quick = quick_sort(test_arr.copy())
+    print("\nQuick Sort:")
+    print("Sorted array:", sorted_arr)
+    print("Time taken:", time_quick)
+    
+    # Test radix sort
+    sorted_arr, time_radix = radix_sort(test_arr.copy())
+    print("\nRadix Sort:")
+    print("Sorted array:", sorted_arr)
+    print("Time taken:", time_radix)
+    
+    # Test linear search
+    target = 22
+    found, time_linear = linear_search(test_arr, target)
+    print("\nLinear Search:")
+    print(f"Searching for {target}: {'Found' if found else 'Not found'}")
+    print("Time taken:", time_linear)
+
+
+
