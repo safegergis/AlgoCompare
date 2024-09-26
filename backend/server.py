@@ -13,11 +13,16 @@ def sort_array():
     data = request.json
     array = data['array']
     print(data)
+    print(array)
+    
     sorted_array_bubble, time_taken_bubble = bubble_sort(array)
     sorted_array_merge, time_taken_merge = merge_sort(array)
     sorted_array_quick, time_taken_quick = quick_sort(array)
     sorted_array_radix, time_taken_radix = radix_sort(array)
-
+    
+    for i in range(len(array)):
+        print(array[i])
+    
     response = jsonify({
         'bubble_sort': {
             'sorted_array': sorted_array_bubble,

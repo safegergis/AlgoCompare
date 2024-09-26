@@ -5,57 +5,58 @@ from time import process_time
 import random
 
 def bubble_sort(arr):
+    array = arr.copy()
     start_time = process_time()
     
-    n = len(arr)
+    n = len(array)
     for i in range(n):
         for j in range(0, n-i-1):
-            if arr[j] > arr[j+1]:
-                arr[j], arr[j+1] = arr[j+1], arr[j] #swap if the next element is bigger
+            if array[j] > array[j+1]:
+                array[j], array[j+1] = array[j+1], array[j] #swap if the next element is bigger
     
     end_time = process_time()
-    elapsed_time = end_time - start_time
-    return arr, elapsed_time
-
-def merge_sort(arr):
-    start_time = process_time()
-    
-    # Merge sort algorithm implementation goes here
-    if len(arr) > 1:
-        mid = len(arr) // 2
-        left_half = arr[:mid]
-        right_half = arr[mid:]
-
-        merge_sort(left_half)
-        merge_sort(right_half) 
-
-        i = j = k = 0 # i for the left, j for the right, k for the overal list
-
-        # left half block
+    elapsed_time = round((end_time - start_time) * 1000, 3)
+    return array, elapsed_time
+def _merge_sort(array):
+    if len(array) > 1:
+        mid = len(array) // 2
+        left_half = array[:mid]
+        right_half = array[mid:]
+        
+        _merge_sort(left_half)
+        _merge_sort(right_half)
+        
+        i = j = k = 0
+        
         while i < len(left_half) and j < len(right_half):
             if left_half[i] < right_half[j]:
-                arr[k] = left_half[i]
+                array[k] = left_half[i]
                 i += 1
             else:
-              arr[k] = right_half[j]
-              j += 1
-              k +=1
-        
-        #Remaining left half block
+                array[k] = right_half[j]
+                j += 1
+            k += 1
+            
         while i < len(left_half):
-            arr[k] = left_half[i]
+            array[k] = left_half[i]
             i += 1
             k += 1
-        
-        #Remaining right half block
+            
         while j < len(right_half):
-            arr[k] = right_half[j]
+            array[k] = right_half[j]
             j += 1
             k += 1
+            
+def merge_sort(arr):
+    array = arr.copy()
+    start_time = process_time()
+    
+    _merge_sort(array)
         
     end_time = process_time()
-    elapsed_time = end_time - start_time
-    return arr, elapsed_time
+    elapsed_time = round((end_time - start_time) * 1000, 3)
+    return array, elapsed_time
+
 def _quick_sort(arr):
         if len(arr) <= 1:
             return arr
@@ -66,12 +67,13 @@ def _quick_sort(arr):
             right = [x for x in arr if x > pivot]
             return _quick_sort(left) + middle + _quick_sort(right)
 def quick_sort(arr):
+    array = arr.copy()
     start_time = process_time()
     
-    sorted_array = _quick_sort(arr)
+    sorted_array = _quick_sort(array)
 
     end_time = process_time()
-    elapsed_time = end_time - start_time
+    elapsed_time = round((end_time - start_time) * 1000, 3)
     return sorted_array, elapsed_time
 
     
@@ -99,17 +101,18 @@ def counting_sort(arr, place):
 
         return output
 def radix_sort(arr):
+    array = arr.copy()
     start_time = process_time()
     
     max_element = max(arr)
     place = 1
     while max_element // place > 0:
-        arr = counting_sort(arr, place)
+        array = counting_sort(array, place)
         place *= 10
     
     end_time = process_time()
-    elapsed_time = end_time - start_time
-    return arr, elapsed_time
+    elapsed_time = round((end_time - start_time) * 1000, 3)
+    return array, elapsed_time
 
 def linear_search(arr, target):
     start_time = process_time()
@@ -125,7 +128,7 @@ def linear_search(arr, target):
         print(f"{target} is not in the list. ")
         
     end_time = process_time()
-    elapsed_time = end_time - start_time
+    elapsed_time = round((end_time - start_time) * 1000, 3)
     return found, elapsed_time  # Return found
 
 
