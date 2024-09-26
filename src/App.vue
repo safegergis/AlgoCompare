@@ -27,7 +27,7 @@ const timeTaken = ref<number[]>([])
 const handleSubmit = async () => {
   const array = { array: unsortedArray.value.split(',').map(Number) }
   console.log(array)
-  const response = await ofetch('http://127.0.0.1:5000/sort', {
+  const response = await ofetch('https://algoapi-a482.onrender.com/sort', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -80,11 +80,11 @@ const clearArray = () => {
 </script>
 
 <template>
-  <div class="bg-gray-300 flex flex-col items-center justify-center h-screen">
-    <div class="container mx-auto p-4">
-      <Card>
+  <div class="bg-gray-300 flex flex-col items-center justify-center min-h-screen sm:p-4">
+    <div class="container mx-auto">
+      <Card class="mb-4">
         <CardHeader>
-          <CardTitle>Array Sorting Visualizer</CardTitle>
+          <CardTitle class="text-xl sm:text-2xl">Array Sorting Visualizer</CardTitle>
         </CardHeader>
         <CardContent>
           <form @submit.prevent="handleSubmit" class="space-y-4">
@@ -92,12 +92,17 @@ const clearArray = () => {
               v-model="unsortedArray"
               placeholder="Enter your unsorted array (comma-separated numbers)"
               class="w-full"
+              rows="3"
             />
-            <Button type="submit">Sort Array</Button>
+            <Button type="submit" class="w-full sm:w-auto">Sort Array</Button>
           </form>
-          <div class="flex justify-between mt-2">
-            <Button @click="openDialog">Generate Random Array</Button>
-            <Button @click="clearArray" variant="destructive">Clear</Button>
+          <div
+            class="flex flex-col sm:flex-row justify-between mt-4 space-y-2 sm:space-y-0 sm:space-x-2"
+          >
+            <Button @click="openDialog" class="w-full sm:w-auto">Generate Random Array</Button>
+            <Button @click="clearArray" variant="destructive" class="w-full sm:w-auto"
+              >Clear</Button
+            >
           </div>
         </CardContent>
       </Card>
@@ -123,79 +128,81 @@ const clearArray = () => {
             </div>
           </div>
           <DialogFooter>
-            <Button @click="generateRandomArray">Generate</Button>
+            <Button @click="generateRandomArray" class="w-full">Generate</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
-      <Card class="mt-8 p-4">
-        <h2 class="text-xl font-semibold mb-2">Sorting Time Comparison</h2>
-        <div class="">
-          <TimeChart :data="timeTaken" />
-        </div>
-      </Card>
-
-      <Card class="mt-8">
+      <Card class="mb-4">
         <CardHeader>
-          <CardTitle>Bubble Sort</CardTitle>
+          <CardTitle class="text-lg sm:text-xl">Sorting Time Comparison</CardTitle>
         </CardHeader>
         <CardContent>
-          <p v-if="timeTaken.length > 0" class="bg-gray-100 p-4 rounded">
-            Time taken by Bubble Sort: {{ timeTaken[0] }} ms
+          <TimeChart :data="timeTaken" />
+        </CardContent>
+      </Card>
+
+      <Card class="mb-4">
+        <CardHeader>
+          <CardTitle class="text-lg">Bubble Sort</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p v-if="timeTaken.length > 0" class="bg-gray-100 p-2 rounded text-sm">
+            Time taken: {{ timeTaken[0] }} ms
           </p>
-          <p v-else class="bg-gray-100 p-4 rounded">No time taken yet</p>
-          <p v-if="sortedArrayBubble" class="text-sm text-gray-500 p-4 rounded">
+          <p v-else class="bg-gray-100 p-2 rounded text-sm">No time taken yet</p>
+          <p v-if="sortedArrayBubble" class="text-xs text-gray-500 mt-2 break-words">
             Result: {{ sortedArrayBubble }}
           </p>
-          <p v-else class="text-sm text-gray-500 p-4 rounded">Array not sorted yet</p>
+          <p v-else class="text-xs text-gray-500 mt-2">Array not sorted yet</p>
         </CardContent>
       </Card>
 
-      <Card class="mt-4">
+      <Card class="mb-4">
         <CardHeader>
-          <CardTitle>Merge Sort</CardTitle>
+          <CardTitle class="text-lg">Merge Sort</CardTitle>
         </CardHeader>
         <CardContent>
-          <p v-if="timeTaken.length > 0" class="bg-gray-100 p-4 rounded">
-            Time taken by Merge Sort: {{ timeTaken[1] }} ms
+          <p v-if="timeTaken.length > 0" class="bg-gray-100 p-2 rounded text-sm">
+            Time taken: {{ timeTaken[1] }} ms
           </p>
-          <p v-else class="bg-gray-100 p-4 rounded">No time taken yet</p>
-          <p v-if="sortedArrayMerge" class="text-sm text-gray-500 p-4 rounded">
+          <p v-else class="bg-gray-100 p-2 rounded text-sm">No time taken yet</p>
+          <p v-if="sortedArrayMerge" class="text-xs text-gray-500 mt-2 break-words">
             Result: {{ sortedArrayMerge }}
           </p>
-          <p v-else class="text-sm text-gray-500 p-4 rounded">Array not sorted yet</p>
+          <p v-else class="text-xs text-gray-500 mt-2">Array not sorted yet</p>
         </CardContent>
       </Card>
 
-      <Card class="mt-4">
+      <Card class="mb-4">
         <CardHeader>
-          <CardTitle>Quick Sort</CardTitle>
+          <CardTitle class="text-lg">Quick Sort</CardTitle>
         </CardHeader>
         <CardContent>
-          <p v-if="timeTaken.length > 0" class="bg-gray-100 p-4 rounded">
-            Time taken by Quick Sort: {{ timeTaken[2] }} ms
+          <p v-if="timeTaken.length > 0" class="bg-gray-100 p-2 rounded text-sm">
+            Time taken: {{ timeTaken[2] }} ms
           </p>
-          <p v-else class="bg-gray-100 p-4 rounded">No time taken yet</p>
-          <p v-if="sortedArrayQuick" class="text-sm text-gray-500 p-4 rounded">
+          <p v-else class="bg-gray-100 p-2 rounded text-sm">No time taken yet</p>
+          <p v-if="sortedArrayQuick" class="text-xs text-gray-500 mt-2 break-words">
             Result: {{ sortedArrayQuick }}
           </p>
-          <p v-else class="text-sm text-gray-500 p-4 rounded">Array not sorted yet</p>
+          <p v-else class="text-xs text-gray-500 mt-2">Array not sorted yet</p>
         </CardContent>
       </Card>
 
-      <Card class="mt-4">
+      <Card class="mb-4">
         <CardHeader>
-          <CardTitle>Radix Sort</CardTitle>
+          <CardTitle class="text-lg">Radix Sort</CardTitle>
         </CardHeader>
         <CardContent>
-          <p v-if="timeTaken.length > 0" class="bg-gray-100 p-4 rounded">
-            Time taken by Radix Sort: {{ timeTaken[3] }} ms
+          <p v-if="timeTaken.length > 0" class="bg-gray-100 p-2 rounded text-sm">
+            Time taken: {{ timeTaken[3] }} ms
           </p>
-          <p v-else class="bg-gray-100 p-4 rounded">No time taken yet</p>
-          <p v-if="sortedArrayRadix" class="text-sm text-gray-500 p-4 rounded">
+          <p v-else class="bg-gray-100 p-2 rounded text-sm">No time taken yet</p>
+          <p v-if="sortedArrayRadix" class="text-xs text-gray-500 mt-2 break-words">
             Result: {{ sortedArrayRadix }}
           </p>
-          <p v-else class="text-sm text-gray-500 p-4 rounded">Array not sorted yet</p>
+          <p v-else class="text-xs text-gray-500 mt-2">Array not sorted yet</p>
         </CardContent>
       </Card>
     </div>
