@@ -42,7 +42,7 @@ const handleSubmit = async () => {
     sortedArrayMerge.value = response.merge_sort.sorted_array.join(', ')
     sortedArrayQuick.value = response.quick_sort.sorted_array.join(', ')
     sortedArrayRadix.value = response.radix_sort.sorted_array.join(', ')
-    found.value = response.linear_search.found
+    found.value = response.linear_search.found.join(', ')
     timeTaken.value = [
       response.bubble_sort.time_taken,
       response.merge_sort.time_taken,
@@ -221,7 +221,8 @@ const clearArray = () => {
           </p>
           <p v-else class="bg-gray-100 p-2 rounded text-sm">No time taken yet</p>
           <p v-if="found.length > 0" class="text-xs text-gray-500 mt-2 break-words">
-            Target found at indices: {{ found }}
+            Target found at indices: {{ found }} <br />
+            Sorted Array: {{ sortedArrayRadix }}
           </p>
 
           <p v-else class="text-xs text-gray-500 mt-2">Array not sorted yet</p>
