@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS = CORS(app)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
-app.config['CORS_ALLOW_ALL_ORIGINS'] = True
+app.config['CORS_ALLOW_ALL_ORIGINS'] = False
 
 @app.route('/sort', methods=['POST'])
 def sort_array():
@@ -41,7 +41,7 @@ def sort_array():
             'time_taken': time_taken_radix
         }
     })
-    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Origin', 'https://algocompare.onrender.com')
     return response
 
 if __name__ == '__main__':
