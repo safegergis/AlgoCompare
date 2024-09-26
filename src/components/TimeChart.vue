@@ -42,7 +42,7 @@ const options = {
 }
 
 const chartData = computed(() => ({
-  labels: ['Bubble Sort', 'Merge Sort', 'Quick Sort', 'Radix Sort'],
+  labels: ['Bubble Sort', 'Merge Sort', 'Quick Sort', 'Radix Sort', 'Linear Search'],
   datasets: [
     {
       data: props.data,

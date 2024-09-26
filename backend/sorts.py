@@ -116,19 +116,14 @@ def radix_sort(arr):
 
 def linear_search(arr, target):
     start_time = process_time()
-    
     # Linear search algorithm implementation goes here
-    found = False
+    found = []
     for i  in range(len(arr)):
-        if arr[i] == target:
-            print(f"{target} is at {i}")
-            found = True
-            break       
-    if not found:
-        print(f"{target} is not in the list. ")
-        
+        if arr[i] == int(target):
+            found.append(i)      
     end_time = process_time()
     elapsed_time = round((end_time - start_time) * 1000, 3)
+
     return found, elapsed_time  # Return found
 
 

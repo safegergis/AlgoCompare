@@ -22,31 +22,33 @@ const sortedArrayMerge = ref('')
 const sortedArrayQuick = ref('')
 const sortedArrayRadix = ref('')
 
+const target = ref<number>(0)
+
+const found = ref<number[]>([])
+
 const timeTaken = ref<number[]>([])
 
 const handleSubmit = async () => {
-  const array = { array: unsortedArray.value.split(',').map(Number) }
-  console.log(array)
+  const body = { array: unsortedArray.value.split(',').map(Number), target: target.value }
   const response = await ofetch('https://algoapi-a482.onrender.com/sort', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(array)
+    body: JSON.stringify(body)
   })
-  console.log(response)
-  console.log(response.bubble_sort.sorted_array)
   if (response) {
     sortedArrayBubble.value = response.bubble_sort.sorted_array.join(', ')
     sortedArrayMerge.value = response.merge_sort.sorted_array.join(', ')
     sortedArrayQuick.value = response.quick_sort.sorted_array.join(', ')
     sortedArrayRadix.value = response.radix_sort.sorted_array.join(', ')
-
+    found.value = response.linear_search.found
     timeTaken.value = [
       response.bubble_sort.time_taken,
       response.merge_sort.time_taken,
       response.quick_sort.time_taken,
-      response.radix_sort.time_taken
+      response.radix_sort.time_taken,
+      response.linear_search.time_taken
     ]
   }
 }
@@ -88,12 +90,15 @@ const clearArray = () => {
         </CardHeader>
         <CardContent>
           <form @submit.prevent="handleSubmit" class="space-y-4">
+            <p class="text-sm">Enter the array to be sorted</p>
             <Textarea
               v-model="unsortedArray"
               placeholder="Enter your unsorted array (comma-separated numbers)"
               class="w-full"
               rows="3"
             />
+            <p class="text-sm">Enter the target number for linear search</p>
+            <Input v-model="target" placeholder="Enter the target number" class="w-full" />
             <Button type="submit" class="w-full sm:w-auto">Sort Array</Button>
           </form>
           <div
@@ -202,6 +207,23 @@ const clearArray = () => {
           <p v-if="sortedArrayRadix" class="text-xs text-gray-500 mt-2 break-words">
             Result: {{ sortedArrayRadix }}
           </p>
+          <p v-else class="text-xs text-gray-500 mt-2">Array not sorted yet</p>
+        </CardContent>
+      </Card>
+
+      <Card class="mb-4">
+        <CardHeader>
+          <CardTitle class="text-lg">Linear Search</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p v-if="timeTaken.length > 0" class="bg-gray-100 p-2 rounded text-sm">
+            Time taken: {{ timeTaken[4] }} ms
+          </p>
+          <p v-else class="bg-gray-100 p-2 rounded text-sm">No time taken yet</p>
+          <p v-if="found.length > 0" class="text-xs text-gray-500 mt-2 break-words">
+            Target found at indices: {{ found }}
+          </p>
+
           <p v-else class="text-xs text-gray-500 mt-2">Array not sorted yet</p>
         </CardContent>
       </Card>
