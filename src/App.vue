@@ -225,7 +225,7 @@ const clearArray = () => {
             Sorted Array: {{ sortedArrayRadix }}
           </p>
 
-          <p v-else class="text-xs text-gray-500 mt-2">Array not sorted yet</p>
+          <p v-else class="text-xs text-gray-500 mt-2">Target not found</p>
         </CardContent>
       </Card>
     </div>
