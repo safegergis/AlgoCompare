@@ -30,7 +30,7 @@ const timeTaken = ref<number[]>([])
 
 const handleSubmit = async () => {
   const body = { array: unsortedArray.value.split(',').map(Number), target: target.value }
-  const response = await ofetch('https://algoapi-a482.onrender.com/sort', {
+  const response = await ofetch('http://127.0.0.1:5000/sort', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
