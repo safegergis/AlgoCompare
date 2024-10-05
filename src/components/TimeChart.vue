@@ -1,6 +1,12 @@
 <template>
   <div>
     <BarChart :chartData="chartData" :options="options" @click="handleClick" />
+    <button
+      @click="showAllBars"
+      class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+    >
+      Show All
+    </button>
   </div>
 </template>
 
@@ -78,5 +84,9 @@ const handleClick = (event: any, elements: any) => {
     const index = elements[0].index
     hiddenBars.value[index] = !hiddenBars.value[index]
   }
+}
+
+const showAllBars = () => {
+  hiddenBars.value = new Array(5).fill(false)
 }
 </script>
