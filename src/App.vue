@@ -222,7 +222,6 @@ const clearArray = () => {
           <p v-else class="bg-gray-100 p-2 rounded text-sm">No time taken yet</p>
           <p v-if="found.length > 0" class="text-xs text-gray-500 mt-2 break-words">
             Target found at indices: {{ found }} <br />
-            Sorted Array: {{ sortedArrayRadix }}
           </p>
 
           <p v-else class="text-xs text-gray-500 mt-2">Target not found</p>
