@@ -18,7 +18,7 @@ def sort_array():
     sorted_array_merge, time_taken_merge = merge_sort(array)
     sorted_array_quick, time_taken_quick = quick_sort(array)
     sorted_array_radix, time_taken_radix = radix_sort(array)
-    found, time_taken_linear = linear_search(sorted_array_radix, target)
+    found, time_taken_linear = linear_search(array, target)
     response = jsonify({
         'bubble_sort': {
             'sorted_array': sorted_array_bubble,

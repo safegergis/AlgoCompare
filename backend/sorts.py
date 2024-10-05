@@ -114,7 +114,8 @@ def radix_sort(arr):
     elapsed_time = round((end_time - start_time) * 1000, 3)
     return array, elapsed_time
 
-def linear_search(arr, target):
+def linear_search(array, target):
+    arr = array.copy()
     start_time = process_time()
     # Linear search algorithm implementation goes here
     found = []
